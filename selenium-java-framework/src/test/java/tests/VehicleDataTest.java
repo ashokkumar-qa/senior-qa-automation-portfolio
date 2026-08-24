@@ -3,13 +3,16 @@ package tests;
 import base.BaseTest;
 import data.TestDataProvider;
 import driver.DriverFactory;
+import listeners.TestListener;
 import model.InsuranceTestData;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 import retry.RetryAnalyzer;
 import workflow.InsuranceWorkFlow;
 
+@Listeners(TestListener.class)
 public class VehicleDataTest extends BaseTest {
 
     private HomePage homePage;
