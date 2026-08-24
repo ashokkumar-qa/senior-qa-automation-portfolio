@@ -2,6 +2,7 @@ package driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -14,7 +15,20 @@ public class DriverFactory {
     public static void initDriver(String browser) {
 
         WebDriver webDriver = switch (browser.toLowerCase()) {
-            case "chrome" -> new ChromeDriver();
+            case "chrome" -> {
+                ChromeOptions options = new ChromeOptions();
+
+                if (System.getenv("CI") != null) {
+                    options.addArguments(
+                            "--headless=new",
+                            "--no-sandbox",
+                            "--disable-dev-shm-usage",
+                            "--window-size=1920,1080"
+                    );
+                }
+
+                yield new ChromeDriver(options);
+            }
             case "firefox" -> new FirefoxDriver();
             case "edge" -> new EdgeDriver();
             default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
