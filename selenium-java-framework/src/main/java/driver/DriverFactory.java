@@ -1,24 +1,37 @@
 package driver;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-
 public class DriverFactory {
 
-    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final Logger logger =
+            LogManager.getLogger(DriverFactory.class);
 
-    //    Initializes and stores a WebDriver instance for the current thread
+    private static final ThreadLocal<WebDriver> driver =
+            new ThreadLocal<>();
+
     public static void initDriver(String browser) {
 
+        logger.info("Initializing browser: {}", browser);
+
         WebDriver webDriver = switch (browser.toLowerCase()) {
+
             case "chrome" -> {
+
                 ChromeOptions options = new ChromeOptions();
 
                 if (System.getenv("CI") != null) {
+
+                    logger.info(
+                            "CI environment detected. Running Chrome in headless mode"
+                    );
+
                     options.addArguments(
                             "--headless=new",
                             "--no-sandbox",
@@ -29,23 +42,38 @@ public class DriverFactory {
 
                 yield new ChromeDriver(options);
             }
+
             case "firefox" -> new FirefoxDriver();
+
             case "edge" -> new EdgeDriver();
-            default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
+
+            default -> throw new IllegalArgumentException(
+                    "Unsupported browser: " + browser
+            );
         };
+
         driver.set(webDriver);
+
+        logger.info(
+                "{} browser initialized successfully",
+                browser
+        );
     }
 
-    //    Returns the WebDriver instance associated with the current thread
     public static WebDriver getDriver() {
         return driver.get();
     }
 
-    //    Terminates the WebDriver session and removes it from the current thread
     public static void quitDriver() {
+
         if (driver.get() != null) {
+
+            logger.info("Closing browser");
+
             driver.get().quit();
             driver.remove();
+
+            logger.info("Browser closed successfully");
         }
     }
 }
