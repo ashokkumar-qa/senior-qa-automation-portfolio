@@ -10,6 +10,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE: insurance_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -p${{ secrets.DB_PASSWORD }}"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,7 +34,21 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Install MySQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+
+      - name: Initialize insurance database
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -uroot -p"$DB_PASSWORD" < database-testing/01-database-setup.sql
+          mysql -h 127.0.0.1 -P 3306 -uroot -p"$DB_PASSWORD" < database-testing/02-test-data.sql
+
       - name: Run Maven tests
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: mvn clean test
 
       - name: Upload failure screenshots

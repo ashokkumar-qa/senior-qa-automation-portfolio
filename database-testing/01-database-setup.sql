@@ -1,4 +1,4 @@
-CREATE DATABASE IS NOT EXISTS insurance_db;
+CREATE DATABASE IF NOT EXISTS insurance_db;
        USE insurance_db;
 
 CREATE TABLE IF NOT EXISTS customers (
@@ -8,17 +8,6 @@ CREATE TABLE IF NOT EXISTS customers (
     email VARCHAR(100),
     city VARCHAR(50),
     status VARCHAR(20)
-    );
-
-CREATE TABLE IF NOT EXISTS policies (
-    policy_id INT PRIMARY KEY,
-    customer_id INT,
-    policy_type VARCHAR(50),
-    premium_amount DECIMAL(10,2),
-    start_date DATE,
-    end_date DATE,
-    policy_status VARCHAR(20),
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
     );
 
 CREATE TABLE IF NOT EXISTS policies (

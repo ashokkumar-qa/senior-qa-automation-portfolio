@@ -15,7 +15,6 @@ public class HomePage {
     }
 
     public void clickAutomobiles(){
-        elementUtils.waitForClickability(automobilesLink, 10);
         elementUtils.click(automobilesLink);
     }
 
