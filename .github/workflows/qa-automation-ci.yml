@@ -58,3 +58,11 @@ jobs:
           name: failure-screenshots
           path: selenium-java-framework/screenshots/
           if-no-files-found: ignore
+
+      - name: Upload Extent Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extent-report
+          path: selenium-java-framework/reports/
+          if-no-files-found: warn

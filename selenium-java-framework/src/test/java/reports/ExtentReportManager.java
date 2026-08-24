@@ -1,0 +1,33 @@
+package reports;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class ExtentReportManager {
+
+    private static ExtentReports extentReports;
+
+    public static ExtentReports getInstance() {
+
+        if (extentReports == null) {
+
+            ExtentSparkReporter sparkReporter =
+                    new ExtentSparkReporter("./reports/ExtentReport.html");
+
+            sparkReporter.config()
+                    .setReportName("QA Automation Test Report");
+
+            sparkReporter.config()
+                    .setDocumentTitle("Automation Execution Report");
+
+            extentReports = new ExtentReports();
+
+            extentReports.attachReporter(sparkReporter);
+
+            extentReports.setSystemInfo("Framework", "Selenium Java TestNG");
+            extentReports.setSystemInfo("Java Version", "17");
+        }
+
+        return extentReports;
+    }
+}
