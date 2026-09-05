@@ -11,14 +11,14 @@ public class SendQuote {
     private static final Logger logger =
             LogManager.getLogger(SendQuote.class);
 
-    private ElementUtils elementUtils;
+    private final ElementUtils elementUtils;
 
-    private By emailInput = By.id("email");
-    private By userNameInput = By.id("username");
-    private By passwordInput = By.id("password");
-    private By confirmPasswordInput = By.id("confirmpassword");
-    private By sendButton = By.id("sendemail");
-    private By successMessage =
+    private final By emailInput = By.id("email");
+    private final By userNameInput = By.id("username");
+    private final By passwordInput = By.id("password");
+    private final By confirmPasswordInput = By.id("confirmpassword");
+    private final By sendButton = By.id("sendemail");
+    private final By successMessage =
             By.xpath("//h2[text()='Sending e-mail success!']");
 
     public SendQuote(WebDriver driver) {
@@ -49,9 +49,11 @@ public class SendQuote {
     }
 
     public boolean isEmailSuccessMessageDisplayed() {
-
-        elementUtils.waitForVisibility(successMessage, 20);
-
-        return elementUtils.isDisplayed(successMessage);
+        try {
+            elementUtils.waitForVisibility(successMessage, 20);
+            return elementUtils.isDisplayed(successMessage);
+        } catch (org.openqa.selenium.TimeoutException e) {
+            return false;
+        }
     }
 }

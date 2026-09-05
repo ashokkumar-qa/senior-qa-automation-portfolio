@@ -66,3 +66,11 @@ jobs:
           name: extent-report
           path: selenium-java-framework/reports/
           if-no-files-found: warn
+
+      - name: Upload Cucumber Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: selenium-java-framework/target/cucumber-report.html
+          if-no-files-found: warn

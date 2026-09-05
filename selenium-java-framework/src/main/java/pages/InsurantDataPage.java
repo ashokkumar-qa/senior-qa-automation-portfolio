@@ -6,34 +6,34 @@ import utils.ElementUtils;
 
 public class InsurantDataPage {
 
-    private ElementUtils elementUtils;
+    private final ElementUtils elementUtils;
 
-    private By firstNameInput = By.id("firstname");
-    private By lastNameInput = By.id("lastname");
-    private By birthDateInput = By.id("birthdate");
-    private By genderMaleRadio =
+    private final By firstNameInput = By.id("firstname");
+    private final By lastNameInput = By.id("lastname");
+    private final By birthDateInput = By.id("birthdate");
+    private final By genderMaleRadio =
             By.xpath("//input[@id='gendermale']/parent::label");
-    private By genderFemaleRadio =
+    private final By genderFemaleRadio =
             By.xpath("//input[@id='genderfemale']/parent::label");
-    private By streetAddressInput = By.id("streetaddress");
-    private By countryDropDown = By.id("country");
-    private By zipCodeInput = By.id("zipcode");
-    private By cityInput = By.id("city");
-    private By occupationDropDown = By.id("occupation");
-    private By hobbiesSpeedingCheckBox =
+    private final By streetAddressInput = By.id("streetaddress");
+    private final By countryDropDown = By.id("country");
+    private final By zipCodeInput = By.id("zipcode");
+    private final By cityInput = By.id("city");
+    private final By occupationDropDown = By.id("occupation");
+    private final By hobbiesSpeedingCheckBox =
             By.xpath("//input[@id='speeding']/parent::label");
-    private By hobbiesBungeeJumpingCheckBox =
+    private final By hobbiesBungeeJumpingCheckBox =
             By.xpath("//input[@id='bungeejumping']/parent::label");
 
-    private By hobbiesCliffDivingCheckBox =
+    private final By hobbiesCliffDivingCheckBox =
             By.xpath("//input[@id='cliffdiving']/parent::label");
 
-    private By hobbiesSkydivingCheckBox =
+    private final By hobbiesSkydivingCheckBox =
             By.xpath("//input[@id='skydiving']/parent::label");
 
-    private By hobbiesOtherCheckBox =
+    private final By hobbiesOtherCheckBox =
             By.xpath("//input[@id='other']/parent::label");
-    private By nextButton = By.id("nextenterproductdata");
+    private final By nextButton = By.id("nextenterproductdata");
 
     public InsurantDataPage(WebDriver driver) {
         this.elementUtils = new ElementUtils(driver);
@@ -52,7 +52,7 @@ public class InsurantDataPage {
         elementUtils.type(birthDateInput, birthDate);
     }
 
-    public void selectGenderMale(String gender){
+    public void selectGender(String gender){
 
         if(gender.equalsIgnoreCase("male")){
             elementUtils.click(genderMaleRadio);
@@ -81,7 +81,7 @@ public class InsurantDataPage {
         elementUtils.selectByVisibleText(occupationDropDown, occupation);
     }
 
-    public void selectHobbiesSpeeding(String hobby) {
+    public void selectHobbies(String hobby) {
         if (hobby.equalsIgnoreCase("Speeding")) {
             elementUtils.click(hobbiesSpeedingCheckBox);
         } else if (hobby.equalsIgnoreCase("Bungee Jumping")) {

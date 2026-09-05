@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 public class GetUserTest extends BaseApiTest {
 
     @Test
-    public void verifyGetUser(){
+    public void verifyGetUser() {
 
         Response response =
                 given()

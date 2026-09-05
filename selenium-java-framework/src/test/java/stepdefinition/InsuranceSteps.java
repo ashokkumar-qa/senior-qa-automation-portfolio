@@ -6,14 +6,12 @@ import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import model.InsuranceTestData;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import workflow.InsuranceWorkFlow;
 import pages.HomePage;
 
 public class InsuranceSteps {
 
-    private InsuranceWorkFlow insuranceWorkFlow =
-            new InsuranceWorkFlow();
+    private InsuranceWorkFlow insuranceWorkFlow;
     private InsuranceTestData data;
     private boolean quoteSubmittedSuccessfully;
 
@@ -21,6 +19,8 @@ public class InsuranceSteps {
     public void the_user_is_on_the_automobile_insurance_page() {
 
         DriverFactory.initDriver("chrome");
+
+        insuranceWorkFlow = new InsuranceWorkFlow();
 
         DriverFactory.getDriver().get("http://sampleapp.tricentis.com/");
 

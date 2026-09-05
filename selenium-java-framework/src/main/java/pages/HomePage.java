@@ -8,7 +8,7 @@ public class HomePage {
 
     private ElementUtils elementUtils;
 
-    private By automobilesLink = By.id("nav_automobile");
+    private final By automobilesLink = By.id("nav_automobile");
 
     public HomePage(WebDriver driver) {
         this.elementUtils = new ElementUtils(driver);

@@ -70,9 +70,11 @@ public class DriverFactory {
 
             logger.info("Closing browser");
 
-            driver.get().quit();
-            driver.remove();
-
+            try {
+                driver.get().quit();
+            } finally {
+                driver.remove();
+            }
             logger.info("Browser closed successfully");
         }
     }

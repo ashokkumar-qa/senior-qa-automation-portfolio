@@ -2,7 +2,6 @@ package workflow;
 
 import driver.DriverFactory;
 import model.InsuranceTestData;
-import org.testng.Assert;
 import pages.*;
 
 public class InsuranceWorkFlow {
@@ -31,13 +30,13 @@ public class InsuranceWorkFlow {
         insurantDataPage.enterFirstName(data.getFirstName());
         insurantDataPage.enterLastName(data.getLastName());
         insurantDataPage.enterBirthDate(data.getBirthDate());
-        insurantDataPage.selectGenderMale(data.getGender());
+        insurantDataPage.selectGender(data.getGender());
         insurantDataPage.enterStreetAddress(data.getStreetAddress());
         insurantDataPage.selectCountry(data.getCountry());
         insurantDataPage.enterZipCode(data.getZipCode());
         insurantDataPage.enterCity(data.getCity());
         insurantDataPage.selectOccupation(data.getOccupation());
-        insurantDataPage.selectHobbiesSpeeding(data.getHobby());
+        insurantDataPage.selectHobbies(data.getHobby());
         insurantDataPage.clickNext();
     }
 
@@ -49,7 +48,7 @@ public class InsuranceWorkFlow {
         enterProductData.selectInsuranceSum(data.getInsuranceSum());
         enterProductData.selectMeritRating(data.getMeritRating());
         enterProductData.selectDamageInsurance(data.getDamageInsurance());
-        enterProductData.selectEuroProtection(data.getOptionalProducts());
+        enterProductData.selectOptionalProtection(data.getOptionalProducts());
         enterProductData.selectCourtesyCar(data.getCourtesyCar());
         enterProductData.clickNext();
 

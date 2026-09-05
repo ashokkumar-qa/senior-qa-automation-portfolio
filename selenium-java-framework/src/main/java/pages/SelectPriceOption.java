@@ -6,22 +6,22 @@ import utils.ElementUtils;
 
 public class SelectPriceOption {
 
-    private ElementUtils elementUtils;
+    private final ElementUtils elementUtils;
 
-    private By chooseSilverPriceOptionRadio =
+    private final By chooseSilverPriceOptionRadio =
             By.xpath("//input[@id='selectsilver']/parent::label");
 
-    private By chooseGoldPriceOptionRadio =
+    private final By chooseGoldPriceOptionRadio =
             By.xpath("//input[@id='selectgold']/parent::label");
 
-    private By choosePlatinumPriceOptionRadio =
+    private final By choosePlatinumPriceOptionRadio =
             By.xpath("//input[@id='selectplatinum']/parent::label");
 
-    private By chooseuUltimatePriceOptionRadio =
+    private final By chooseUltimatePriceOptionRadio =
             By.xpath("//input[@id='selectultimate']/parent::label");
 
 
-    private By nextButton = By.id("nextsendquote");
+    private final By nextButton = By.id("nextsendquote");
 
     public SelectPriceOption(WebDriver driver) {
         this.elementUtils = new ElementUtils(driver);
@@ -30,24 +30,19 @@ public class SelectPriceOption {
 
     public void selectPriceOption(String priceOption) {
         if (priceOption.equalsIgnoreCase("Silver")) {
-            elementUtils.waitForClickability(chooseSilverPriceOptionRadio, 10);
             elementUtils.click(chooseSilverPriceOptionRadio);
         } else if (priceOption.equalsIgnoreCase("Gold")) {
-            elementUtils.waitForClickability(chooseGoldPriceOptionRadio, 10);
             elementUtils.click(chooseGoldPriceOptionRadio);
         } else if (priceOption.equalsIgnoreCase("Platinum")) {
-            elementUtils.waitForClickability(choosePlatinumPriceOptionRadio, 10);
             elementUtils.click(choosePlatinumPriceOptionRadio);
         }  else if (priceOption.equalsIgnoreCase("Ultimate")) {
-            elementUtils.waitForClickability(chooseuUltimatePriceOptionRadio, 10);
-            elementUtils.click(chooseuUltimatePriceOptionRadio);
+            elementUtils.click(chooseUltimatePriceOptionRadio);
         }
 
     }
 
     public void clickNext() {
         elementUtils.scrollToElement(nextButton);
-        elementUtils.waitForClickability(nextButton, 10);
         elementUtils.click(nextButton);
     }
 }

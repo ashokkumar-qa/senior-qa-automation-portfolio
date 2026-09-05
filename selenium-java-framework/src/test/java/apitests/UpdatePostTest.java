@@ -10,9 +10,10 @@ import static org.hamcrest.Matchers.*;
 public class UpdatePostTest extends BaseApiTest {
 
     @Test
-    public void verifyUpdatePost(){
+    public void verifyUpdatePost() {
 
-        PostRequest requestBody = new PostRequest("Updated QA Automation",
+        PostRequest requestBody = new PostRequest(
+                "Updated QA Automation",
                 "Updated REST Assured Portfolio Test",
                 1);
 

@@ -17,22 +17,23 @@ FROM customers
 -- QA Validation 2: Find customers without any policies
 
 SELECT
-    customer_id,
-    customer_first_name,
-    customer_last_name
+    customers.customer_id,
+    customers.first_name,
+    customers.last_name
 FROM customers
-LEFT JOIN customers.customer_id = policies.customer_id
-WHERE policies.policy_id is NULL;
+         LEFT JOIN policies
+                   ON customers.customer_id = policies.customer_id
+WHERE policies.policy_id IS NULL;
 
 -- QA Validation 3: Verify the number of policies associated with each customer
 
 SELECT
     customers.customer_id,
-    customers.first_name
-COUNT( poicies.policy_id ) AS total_policies
+    customers.first_name,
+    COUNT(policies.policy_id) AS total_policies
 FROM customers
-LEFT JOIN policies
-ON customers.customer_id = policies.cutomer_id
+         LEFT JOIN policies
+                   ON customers.customer_id = policies.customer_id
 GROUP BY customers.customer_id, customers.first_name;
 
 -- QA Validation 4: Identify duplicate customer email addresses
@@ -63,9 +64,9 @@ SELECT
     policy_type,
     end_date,
     policy_status
-FROM ploicies
+FROM policies
 WHERE policy_status = 'Expired'
-AND end_date >= CURDATE();
+  AND end_date >= CURDATE();
 
 -- QA Validation 7: Verify customers and their associated insurance claims
 

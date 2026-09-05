@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.*;
 public class DeletePostTest extends BaseApiTest {
 
     @Test
-    public void verifyDeletePostTest() {
+    public void verifyDeletePost() {
 
         given()
 

@@ -20,15 +20,16 @@ public class TestListener implements ITestListener {
     private final ExtentReports extentReports =
             ExtentReportManager.getInstance();
 
-    private ExtentTest extentTest;
+    private final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
     @Override
     public void onTestStart(ITestResult result) {
 
         logger.info("Test started: {}", result.getName());
 
-        extentTest =
-                extentReports.createTest(result.getName());
+        extentTest.set(
+                extentReports.createTest(result.getName())
+        );
     }
 
     @Override
@@ -36,7 +37,8 @@ public class TestListener implements ITestListener {
 
         logger.info("Test passed: {}", result.getName());
 
-        extentTest.pass("Test passed successfully");
+        extentTest.get().pass("Test passed successfully");
+        extentTest.remove();
     }
 
     @Override
@@ -48,7 +50,7 @@ public class TestListener implements ITestListener {
                 result.getThrowable()
         );
 
-        extentTest.fail(result.getThrowable());
+        extentTest.get().fail(result.getThrowable());
 
         WebDriver driver = DriverFactory.getDriver();
 
@@ -71,7 +73,21 @@ public class TestListener implements ITestListener {
                     result.getName()
             );
         }
+        extentTest.remove();
     }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+
+        logger.warn("Test skipped: {}", result.getName());
+
+        if (extentTest.get() != null) {
+            extentTest.get().skip("Test skipped");
+        }
+        extentTest.remove();
+    }
+
+
 
     @Override
     public void onFinish(ITestContext context) {

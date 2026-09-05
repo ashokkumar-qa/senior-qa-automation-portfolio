@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.*;
 public class CreatePostTest extends BaseApiTest {
 
     @Test
-    public void verifyCreatePost(){
+    public void verifyCreatePost() {
 
         PostRequest requestBody = new PostRequest(
                 "QA Automation",
@@ -23,7 +23,7 @@ public class CreatePostTest extends BaseApiTest {
                 .body(requestBody)
 
                 .when()
-                .post("posts")
+                .post("/posts")
 
                 .then()
                     .statusCode(201)

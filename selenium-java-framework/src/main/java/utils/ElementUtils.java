@@ -10,28 +10,52 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class    ElementUtils {
+public class ElementUtils {
 
     private WebDriver driver;
 
     public ElementUtils(WebDriver driver) {
         this.driver = driver;
     }
-    public void selectByVisibleText(By locator, String text){
-        Select select=new Select(driver.findElement(locator));
+
+    public void selectByVisibleText(By locator, String text) {
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement element =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+        Select select = new Select(element);
         select.selectByVisibleText(text);
     }
 
-    public void type(By locator, String text){
-      driver.findElement(locator).sendKeys(text);
+    public void type(By locator, String text) {
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement element =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+        element.clear();
+        element.sendKeys(text);
     }
 
-    public void click(By locator){
-        driver.findElement(locator).click();
+    public void click(By locator) {
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement element =
+                wait.until(ExpectedConditions.elementToBeClickable(locator));
+
+        element.click();
     }
 
     public boolean isDisplayed(By locator) {
-        return driver.findElement(locator).isDisplayed();
+        try {
+            return driver.findElement(locator).isDisplayed();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
     }
 
     public void waitForVisibility(By locator, int seconds){
