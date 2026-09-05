@@ -48,6 +48,7 @@ failure screenshots, structured logging, and automated CI execution.
 - Gherkin feature files
 - Step definitions
 - End-to-end insurance quote scenario
+- Cucumber HTML reporting
 
 ### Reporting & Logging
 - Extent Reports HTML reporting
@@ -65,6 +66,7 @@ failure screenshots, structured logging, and automated CI execution.
 - Headless Selenium execution
 - Failure screenshot artifacts
 - Extent Report artifacts
+- Cucumber HTML report artifact
 
 ## Technology Stack
 
@@ -78,7 +80,7 @@ failure screenshots, structured logging, and automated CI execution.
 | Database | MySQL, JDBC, SQL |
 | Test Data | Apache POI, Excel |
 | Build Tool | Maven |
-| Reporting | Extent Reports |
+| Reporting | Extent Reports, Cucumber HTML Report |
 | Logging | Log4j2 |
 | CI/CD | GitHub Actions |
 | Version Control | Git, GitHub |
@@ -95,7 +97,8 @@ senior-qa-automation-portfolio/
 │
 ├── database-testing/
 │   ├── 01-database-setup.sql
-│   └── 02-test-data.sql
+│   ├── 02-test-data.sql
+│   └── 03-qa-validation-queries.sql
 │
 ├── selenium-java-framework/
 │   ├── src/main/java/
@@ -111,6 +114,7 @@ senior-qa-automation-portfolio/
 │   │   ├── listeners/
 │   │   ├── reports/
 │   │   ├── retry/
+│   │   ├── runners/
 │   │   ├── stepdefinition/
 │   │   └── tests/
 │   │
@@ -131,13 +135,13 @@ The framework separates automation responsibilities into reusable and maintainab
 
 - **Driver Layer** — Manages browser initialization, ThreadLocal WebDriver instances, cross-browser execution, and headless execution in CI.
 - **Page Object Layer** — Encapsulates web element locators and page-level interactions using the Page Object Model (POM).
-- **Utility Layer** — Provides reusable Selenium operations such as clicking, typing, explicit waits, dropdown handling, scrolling, and screenshot capture.
+- **Utility Layer** — Provides reusable Selenium operations such as clicking, typing, explicit waits, dropdown handling, and scrolling.
 - **Workflow Layer** — Combines multiple page-level actions into reusable business workflows, including the end-to-end insurance quote process.
 - **Test Layer** — Contains TestNG-based UI, API, and database validation tests.
 - **BDD Layer** — Uses Cucumber feature files and step definitions to represent business-readable end-to-end scenarios.
 - **Data Layer** — Provides external Excel-based test data using Apache POI and TestNG DataProvider.
 - **Listener & Reporting Layer** — Handles test lifecycle events, Extent Reports generation, failure screenshots, retry handling, and Log4j2 logging.
-- **CI/CD Layer** — GitHub Actions provisions Java and MySQL, initializes database test data, executes the Maven test suite, and publishes reports and failure screenshots as artifacts.
+- **CI/CD Layer** — GitHub Actions provisions Java and MySQL, initializes database test data, executes the Maven test suite, and publishes Extent Reports, Cucumber HTML reports, and failure screenshots as artifacts.
 
 ## How to Run the Tests
 
@@ -178,6 +182,7 @@ This executes the automated TestNG suite, including UI automation, API tests, da
 After execution:
 
 - Extent Report: `selenium-java-framework/reports/ExtentReport.html`
+- Cucumber Report: `selenium-java-framework/target/cucumber-report.html`
 - Execution logs: `selenium-java-framework/logs/automation.log`
 - Failure screenshots: `selenium-java-framework/screenshots/`
 
@@ -196,6 +201,7 @@ The CI pipeline:
 5. Executes the complete Maven automation suite.
 6. Uploads failure screenshots when available.
 7. Publishes the Extent Report as a GitHub Actions artifact.
+8. Publishes the Cucumber HTML report as a GitHub Actions artifact.
 
 Database credentials are securely supplied through GitHub Actions Secrets rather than being stored in the repository.
 
@@ -227,6 +233,7 @@ Skipped: 0
 
 BUILD SUCCESS
 ```
+The latest CI execution validates the complete portfolio suite across UI automation, REST API testing, JDBC/MySQL database testing, and Cucumber BDD.
 
 ## Project Purpose
 
